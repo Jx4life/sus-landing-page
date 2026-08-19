@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Susu — Save together. Rise together.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2433;
+    --ink-soft:#2A3547;
+    --green:#2FBF71;
+    --green-deep:#1B8A54;
+    --sand:#F6F1E6;
+    --sand-line:#E6DDC9;
+    --off:#FDFBF7;
+    --gold:#E8A33D;
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    color:var(--ink);
+    background:var(--off);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,36,51,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner{
+    max-width:1120px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{display:flex; align-items:center; gap:10px; text-decoration:none;}
+  .logo-word{
+    font-family:var(--font-body); font-weight:800; letter-spacing:0.02em;
+    font-size:20px; color:var(--off);
+  }
+  .nav-cta{
+    background:var(--green); color:var(--ink); padding:10px 20px; border-radius:100px;
+    font-weight:700; font-size:14px; text-decoration:none; transition:transform 0.2s ease, background 0.2s ease;
+  }
+  .nav-cta:hover{background:#3ED184; transform:translateY(-1px);}
+  .nav-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse 900px 500px at 78% 15%, rgba(47,191,113,0.18), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 15% 90%, rgba(232,163,61,0.10), transparent 60%),
+      var(--ink);
+    color:var(--off);
+    padding:96px 0 110px;
+    overflow:hidden;
+  }
+  .hero-inner{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--green); background:rgba(47,191,113,0.12); border:1px solid rgba(47,191,113,0.3);
+    padding:7px 14px; border-radius:100px; margin-bottom:26px;
+  }
+  .eyebrow-dot{width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse-dot 2s ease-in-out infinite;}
+  @keyframes pulse-dot{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+  .hero h1{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(38px, 5vw, 60px);
+    line-height:1.06; letter-spacing:-0.01em; max-width:620px;
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:500; color:var(--green);
+  }
+  .hero p.lead{
+    margin-top:22px; font-size:18px; line-height:1.6; color:rgba(253,251,247,0.72); max-width:480px;
+  }
+
+  .waitlist-form{
+    margin-top:34px; display:flex; gap:10px; max-width:440px; flex-wrap:wrap;
+  }
+  .waitlist-form input[type="email"]{
+    flex:1; min-width:220px; padding:15px 18px; border-radius:10px; border:1px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.06); color:var(--off); font-family:var(--font-body); font-size:15px;
+    outline:none; transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .waitlist-form input[type="email"]::placeholder{color:rgba(253,251,247,0.45);}
+  .waitlist-form input[type="email"]:focus{border-color:var(--green); background:rgba(255,255,255,0.1);}
+  .waitlist-form button{
+    padding:15px 24px; border-radius:10px; border:none; background:var(--green); color:var(--ink);
+    font-weight:700; font-size:15px; cursor:pointer; transition:background 0.2s ease, transform 0.2s ease;
+    white-space:nowrap;
+  }
+  .waitlist-form button:hover{background:#3ED184; transform:translateY(-1px);}
+  .waitlist-form button:focus-visible, .waitlist-form input:focus-visible{outline:2px solid var(--green); outline-offset:2px;}
+  .form-note{margin-top:12px; font-size:13px; color:rgba(253,251,247,0.45);}
+  .form-success{
+    margin-top:16px; font-size:14.5px; color:var(--green); display:none; font-weight:600;
+  }
+
+  /* ---------- Orbit visual ---------- */
+  .orbit-stage{
+    position:relative; width:100%; aspect-ratio:1/1; max-width:420px; margin:0 auto;
+  }
+  .orbit-track{
+    position:absolute; inset:0; border-radius:50%;
+    border:1.5px dashed rgba(255,255,255,0.14);
+  }
+  .orbit-center{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:104px; height:104px; border-radius:50%;
+    background:linear-gradient(150deg, var(--green), var(--green-deep));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 10px rgba(47,191,113,0.08), 0 20px 40px rgba(0,0,0,0.35);
+  }
+  .orbit-center span{
+    font-family:var(--font-mono); font-weight:600; color:var(--ink); font-size:13px; text-align:center; line-height:1.3;
+  }
+  .orbit-wrapper{
+    position:absolute; inset:0;
+    animation:spin 14s linear infinite;
+  }
+  .orbit-wrapper.reverse .avatar-inner{animation-direction:reverse;}
+  @keyframes spin{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
+
+  .avatar{
+    position:absolute; top:50%; left:50%; width:52px; height:52px; margin:-26px;
+  }
+  .avatar-inner{
+    width:100%; height:100%; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:600; font-size:14px; color:var(--off);
+    animation:spin 14s linear infinite reverse;
+    border:2px solid rgba(255,255,255,0.12);
+  }
+
+  .coin{
+    position:absolute; top:0; left:50%; width:34px; height:34px; margin-left:-17px; margin-top:-17px;
+    border-radius:50%; background:radial-gradient(circle at 35% 30%, #FCD98B, var(--gold));
+    display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(232,163,61,0.4);
+  }
+  .coin-inner{
+    animation:spin 14s linear infinite reverse;
+    font-family:var(--font-mono); font-weight:700; color:var(--ink); font-size:13px;
+  }
+
+  .orbit-caption{
+    text-align:center; margin-top:22px; font-size:13.5px; color:rgba(253,251,247,0.5); font-family:var(--font-mono);
+  }
+
+  /* ---------- Section headings ---------- */
+  .section{padding:100px 0;}
+  .section-head{max-width:600px; margin-bottom:56px;}
+  .section-eyebrow{
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--green-deep); margin-bottom:14px; display:block;
+  }
+  .section-head h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(28px,3.4vw,40px); letter-spacing:-0.01em;
+  }
+  .section-head p{margin-top:16px; font-size:17px; color:#4A5468; max-width:520px;}
+
+  /* ---------- How it works ---------- */
+  .how{background:var(--sand); border-top:1px solid var(--sand-line); border-bottom:1px solid var(--sand-line);}
+  .steps{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative;
+  }
+  .step{padding:0 28px 0 0; position:relative;}
+  .step-num{
+    width:52px; height:52px; border-radius:50%; background:var(--off); border:1.5px solid var(--sand-line);
+    display:flex; align-items:center; justify-content:center; margin-bottom:22px; position:relative; z-index:1;
+  }
+  .step h3{font-family:var(--font-display); font-weight:600; font-size:21px; margin-bottom:10px;}
+  .step p{font-size:15px; color:#4A5468; line-height:1.65;}
+
+  /* ---------- Why / features ---------- */
+  .features{background:var(--off);}
+  .feature-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--sand-line);
+    border:1px solid var(--sand-line); border-radius:16px; overflow:hidden;
+  }
+  .feature{background:var(--off); padding:36px; transition:background 0.25s ease;}
+  .feature:hover{background:var(--sand);}
+  .feature-icon{
+    width:44px; height:44px; border-radius:10px; margin-bottom:20px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(47,191,113,0.1);
+  }
+  .feature h3{font-family:var(--font-display); font-weight:600; font-size:19px; margin-bottom:9px;}
+  .feature p{font-size:14.5px; color:#4A5468; line-height:1.6;}
+
+  /* ---------- Story / tradition ---------- */
+  .story{background:var(--sand); border-top:1px solid var(--sand-line); border-bottom:1px solid var(--sand-line);}
+  .story-inner{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center;}
+  .story-visual{position:relative; width:100%; aspect-ratio:1/1; max-width:340px;}
+  .ring{position:absolute; border-radius:50%;}
+  .ring-a{width:78%; height:78%; top:0; left:0; border:14px solid var(--green); opacity:0.85;}
+  .ring-b{width:78%; height:78%; bottom:0; right:0; border:14px solid var(--ink); opacity:0.9;}
+  .story h2{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,3vw,34px); letter-spacing:-0.01em; margin-bottom:20px;}
+  .story p{font-size:16px; color:#39415a; line-height:1.75; margin-bottom:16px;}
+  .story p:last-child{margin-bottom:0;}
+  .story strong{color:var(--ink); font-weight:700;}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    background:var(--ink); color:var(--off); text-align:center;
+    background-image:radial-gradient(ellipse 700px 400px at 50% 0%, rgba(47,191,113,0.16), transparent 65%);
+  }
+  .cta h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(30px,4vw,44px); letter-spacing:-0.01em;
+    max-width:560px; margin:0 auto 18px;
+  }
+  .cta p{color:rgba(253,251,247,0.65); font-size:17px; max-width:440px; margin:0 auto 36px;}
+  .cta .waitlist-form{margin-left:auto; margin-right:auto; justify-content:center;}
+  .cta .form-note{text-align:center;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink); border-top:1px solid rgba(255,255,255,0.08); padding:40px 0;}
+  .footer-inner{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  }
+  .footer-tag{color:rgba(253,251,247,0.4); font-size:13.5px;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:860px){
+    .hero-inner{grid-template-columns:1fr; text-align:left;}
+    .hero{padding:64px 0 72px;}
+    .orbit-stage{max-width:300px; margin-top:40px;}
+    .steps{grid-template-columns:1fr; gap:36px;}
+    .feature-grid{grid-template-columns:1fr;}
+    .story-inner{grid-template-columns:1fr; gap:36px;}
+    .story-visual{max-width:220px; margin:0 auto;}
+    .section{padding:64px 0;}
+    .footer-inner{flex-direction:column; text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="#2FBF71" stroke-width="3.4"/>
+        <circle cx="18" cy="18" r="8.5" stroke="#FDFBF7" stroke-width="3.4"/>
+      </svg>
+      <span class="logo-word">SUSU</span>
+    </a>
+    <a href="#join" class="nav-cta">Join waitlist</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow"><span class="eyebrow-dot"></span> In development</span>
+      <h1>Save your way,<br><em>safely</em>, together.</h1>
+      <p class="lead">Susu is one place to save money — alone, with friends, or in a rotation where everyone takes turns getting the pot. However you save, your money's tracked, protected, and always visible to you.</p>
+
+      <form class="waitlist-form" id="waitlistForm" action="https://formspree.io/f/mwleapqk" method="POST">
+        <label for="email" class="sr-only" style="position:absolute; left:-9999px;">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        <button type="submit">Join the waitlist</button>
+      </form>
+      <p class="form-note">Free to join. We'll email you the moment your circle can start.</p>
+      <p class="form-success" id="formSuccess">You're on the list — we'll be in touch soon. 🎉</p>
+    </div>
+
+    <div>
+      <div class="orbit-stage">
+        <div class="orbit-track"></div>
+        <div class="orbit-center"><span>This<br>round's<br>pot</span></div>
+        <div class="orbit-wrapper" id="orbitWrapper"></div>
+        <div class="coin" id="coinEl" style="animation: orbit-move 14s linear infinite;">
+          <span class="coin-inner">₵</span>
+        </div>
+      </div>
+      <p class="orbit-caption">rotation mode: six friends, one pot, one turn each round</p>
+    </div>
+  </div>
+</header>
+
+<section class="section how" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Three ways to save</span>
+      <h2>Pick the mode that fits</h2>
+      <p>Every susu wallet works the same underneath — set an amount, set a schedule. How the money moves is up to you.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7.5" r="3.5" stroke="#1F8F54" stroke-width="1.6"/><path d="M4.5 18c.6-3.8 3-5.8 6.5-5.8s5.9 2 6.5 5.8" stroke="#1F8F54" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Solo</h3>
+        <p>Save on your own terms. Set a goal and a schedule, and Susu keeps your progress visible and on track — no one else involved.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="7" cy="8" r="3" stroke="#1F8F54" stroke-width="1.6"/><circle cx="15" cy="9" r="2.4" stroke="#1F8F54" stroke-width="1.6"/><path d="M2.2 18c.5-3.3 2.6-5 4.9-5s4.3 1.6 4.8 4.6M12.4 17.6c.4-2.4 1.9-3.8 3.8-3.8 1.9 0 3.5 1.3 3.8 3.8" stroke="#1F8F54" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Group</h3>
+        <p>Save toward a shared goal with friends or family — a trip, a gift, an emergency fund. Everyone sees the pot grow together.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3a8 8 0 1 1-6.9 4" stroke="#1F8F54" stroke-width="1.6" stroke-linecap="round"/><path d="M4.5 3v4h4" stroke="#1F8F54" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Rotation (ROSCA)</h3>
+        <p>The classic susu circle. Everyone contributes the same amount each round, and the full pot rotates to one member at a time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section features" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Why Susu</span>
+      <h2>Built on trust, backed by structure</h2>
+      <p>The same principle that's held communities together for generations, with the visibility a phone can give it.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2l7 3v5c0 5-3.2 8.4-7 10-3.8-1.6-7-5-7-10V5l7-3z" stroke="#1F8F54" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Full transparency</h3>
+        <p>Every member sees every contribution and every payout, in real time. No guessing who's paid and who hasn't.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="7.5" cy="8" r="3" stroke="#1F8F54" stroke-width="1.6"/><circle cx="15" cy="9.5" r="2.3" stroke="#1F8F54" stroke-width="1.6"/><path d="M2.5 18c.5-3.3 2.6-5 5-5s4.3 1.6 4.9 4.7M12.5 17.6c.4-2.5 2-3.9 3.9-3.9 2 0 3.5 1.4 3.9 3.9" stroke="#1F8F54" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Circles your way</h3>
+        <p>Weekly, biweekly, or monthly. Small circles for close friends, larger ones for community groups — you set the shape.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="9" width="16" height="10" rx="2" stroke="#1F8F54" stroke-width="1.6"/><path d="M6.5 9V6.5a4.5 4.5 0 0 1 9 0V9" stroke="#1F8F54" stroke-width="1.6"/></svg>
+        </div>
+        <h3>Bank-grade security</h3>
+        <p>Contributions are held safely and moved on schedule. Your money's protection is never left to chance.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 11h5l2-4 4 8 2-4h5" stroke="#1F8F54" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>No interest, no debt</h3>
+        <p>Susu isn't a loan. Whether you're saving alone or in a circle, what goes in is exactly what comes back out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section story" id="story">
+  <div class="wrap story-inner">
+    <div class="story-visual reveal">
+      <div class="ring ring-a"></div>
+      <div class="ring ring-b"></div>
+    </div>
+    <div class="reveal">
+      <span class="section-eyebrow">Where the name comes from</span>
+      <h2>A tradition older than banking itself</h2>
+      <p><strong>Susu</strong> is a West African name for the rotating savings circle — a practice where a group pools money on a set schedule and takes turns receiving the full amount. Versions of it exist worldwide, under different names, carrying the same idea: a community can be its own safety net.</p>
+      <p>We didn't invent this. We just built the app it always deserved — one that keeps the trust, and removes the spreadsheet.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section cta" id="join">
+  <div class="wrap">
+    <h2 class="reveal">Be first in the circle</h2>
+    <p class="reveal">We're onboarding waitlisted users in small batches as circles open up. Save your spot.</p>
+    <form class="waitlist-form reveal" id="waitlistForm2" action="https://formspree.io/f/mwleapqk" method="POST">
+      <input type="email" id="email2" name="email" placeholder="you@example.com" required>
+      <button type="submit">Join the waitlist</button>
+    </form>
+    <p class="form-note reveal">No spam. Just one email when it's your turn.</p>
+    <p class="form-success" id="formSuccess2" style="text-align:center;">You're on the list — we'll be in touch soon. 🎉</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 30 30" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="#2FBF71" stroke-width="3.4"/>
+        <circle cx="18" cy="18" r="8.5" stroke="#FDFBF7" stroke-width="3.4"/>
+      </svg>
+      <span class="logo-word" style="font-size:16px;">SUSU</span>
+    </div>
+    <p class="footer-tag">© 2026 Susu. Save together, rise together.</p>
+  </div>
+</footer>
+
+<script>
+  // Build orbiting avatars with a radius that scales with the stage size
+  const stage = document.querySelector('.orbit-stage');
+  const wrapper = document.getElementById('orbitWrapper');
+  const names = ['A','K','M','T','R','J'];
+  const colors = ['#2FBF71','#E8A33D','#3E4A63','#2FBF71','#E8A33D','#3E4A63'];
+  const count = names.length;
+
+  // Wrap the coin so it orbits the same way avatars do
+  const coin = document.getElementById('coinEl');
+  coin.style.animation = 'none';
+  const coinWrap = document.createElement('div');
+  coinWrap.style.position = 'absolute';
+  coinWrap.style.inset = '0';
+  coinWrap.style.animation = 'spin 14s linear infinite';
+  coin.parentNode.insertBefore(coinWrap, coin);
+  coinWrap.appendChild(coin);
+  coin.style.position = 'absolute';
+  coin.style.top = '0';
+  coin.style.left = '50%';
+  coin.style.marginLeft = '-17px';
+  coin.style.marginTop = '-17px';
+
+  let avatarEls = [];
+
+  function buildAvatars(){
+    wrapper.innerHTML = '';
+    avatarEls = [];
+    names.forEach((n, i) => {
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.innerHTML = `<div class="avatar-inner" style="background:${colors[i]}">${n}</div>`;
+      wrapper.appendChild(avatar);
+      avatarEls.push(avatar);
+    });
+    positionOrbit();
+  }
+
+  function positionOrbit(){
+    const radius = stage.clientWidth * 0.42;
+    avatarEls.forEach((avatar, i) => {
+      const angle = (360 / count) * i;
+      avatar.style.transform = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
+    });
+    // Coin sits at the top of the same-radius orbit, then coinWrap spins it around
+    coin.style.left = '50%';
+    coin.style.marginLeft = '-17px';
+    coin.style.marginTop = '-17px';
+    coin.style.top = (stage.clientHeight / 2 - radius) + 'px';
+  }
+
+  buildAvatars();
+  window.addEventListener('resize', positionOrbit);
+
+  // Waitlist form handling (both forms) — submits to Formspree in the background
+  function wireForm(formId, successId){
+    const form = document.getElementById(formId);
+    const success = document.getElementById(successId);
+    if(!form) return;
+    const button = form.querySelector('button');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const originalLabel = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Joining…';
+      const data = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(res => {
+        if(res.ok){
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          return res.json().then(json => {
+            throw new Error((json.errors || []).map(er => er.message).join(', ') || 'Formspree rejected the submission.');
+          });
+        }
+      })
+      .catch(err => {
+        console.error('Waitlist submission failed:', err);
+        button.disabled = false;
+        button.textContent = originalLabel;
+        alert('Something went wrong submitting your email: ' + err.message + '\n\nCheck the browser console for details.');
+      });
+    });
+  }
+  wireForm('waitlistForm', 'formSuccess');
+  wireForm('waitlistForm2', 'formSuccess2');
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
